@@ -1,1 +1,15 @@
+@import "tailwindcss";
 
+/* Fonts */
+@theme {
+  --font-dm-sans: var(--font-dm-sans);
+  --font-manrope: var(--font-manrope);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  border: red solid 1px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
