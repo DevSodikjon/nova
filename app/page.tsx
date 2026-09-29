@@ -3,10 +3,5 @@ import Image from "next/image";
 // import "./globals.css";
 
 export default function Home() {
-  return (
-  <main>
-   <Navbar/>
-
-  </main>
-  );
+  return <main><div className="container">home page</div></main>;
 }

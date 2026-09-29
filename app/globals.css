@@ -9,7 +9,17 @@
 .container {
   width: 100%;
   max-width: 1412px;
-  border: red solid 1px;
+  /* border: red solid 1px; */
   margin: 0 auto;
   padding: 0 20px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Manrope", sans-serif;
+}
+p {
+  font-family: "DM Sans", sans-serif;
 }

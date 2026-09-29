@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 import { DM_Sans, Manrope } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer/Footer";
 
 
 // const geistSans = Geist({
@@ -36,7 +38,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${dmSans.variable} ${manrope.variable} h-full antialiased`}
     >
-      <body className={`${dmSans.variable} ${manrope.variable} min-h-full flex flex-col`}>{children}</body>
+      <body className={`${dmSans.variable} ${manrope.variable} min-h-full flex flex-col`}><Navbar/>{children}<Footer/></body>
     </html>
   );
 }
