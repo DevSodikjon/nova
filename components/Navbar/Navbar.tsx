@@ -1,11 +1,35 @@
 import "@/components/Navbar/Navbar.module.scss";
+import Link from "next/link";
+
+const navLinks = [
+  { name: "Home", href: "/" },
+  { name: "Shop", href: "/shop" },
+  { name: "Categories", href: "/categories" },
+  { name: "About", href: "/about" },
+];
 
 export default function Navbar() {
   return (
     <header>
       <main className="container">
-        <h1 className="font-dm-manrope tracking-[.23em]">NOVA</h1>
-        <h1 className="font-dm-manrope ">NOVA</h1>
+        <div className="logo"></div>
+
+        {/* Navigation */}
+        <nav>
+          {navLinks.map((link) => (
+            <Link key={link.href} href={link.href}>
+              {link.name}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Actions */}
+        <div className="actions">
+          <button>Search</button>
+          <button>Wishlist</button>
+          <button>Cart</button>
+          <button>Account</button>
+        </div>
       </main>
     </header>
   );
