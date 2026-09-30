@@ -1,3 +1,5 @@
+import { TRUE } from "sass";
+
 export const headerLinks = [
   { name: "Home", href: "/" },
   { name: "Shop", href: "/shop" },
@@ -30,3 +32,29 @@ export const footerLinks = {
     { name: "Careers", href: "/careers" },
   ],
 };
+
+export const moods = [
+  {
+    title: "Soft tailoring",
+    tag: "Ease, refined",
+    href: "/categories",
+    image: "/Images/WardrobeCard.svg",
+    alt: "Woman in a cream tailored suit standing in an arched stone hallway",
+    wide: true,
+  },
+  {
+    title: "Modern knitwear",
+    tag: "Texture in motion",
+    href: "/categories",
+      image: "/Images/WardrobeCard.svg",
+    alt: "Woman wearing a chunky brown knit sweater",
+   tall: true,
+  },
+  {
+    title: "After dark",
+    tag: "Precise silhouettes",
+    href: "/categories",
+      image: "/Images/WardrobeCard.svg",
+    alt: "Woman in a black evening gown standing in an art gallery",
+  },
+];
