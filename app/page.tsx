@@ -1,7 +1,11 @@
-import Navbar from "@/components/Navbar/Navbar";
+import Home from "@/app/home/page"
 import Image from "next/image";
-// import "./globals.css";
+import Link from "next/link";
 
-export default function Home() {
-  return <main><div className="container">home page</div></main>;
+export default function page() {
+  return (
+ <main>
+  <Home/>
+ </main>
+  );
 }
