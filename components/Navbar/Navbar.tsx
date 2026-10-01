@@ -101,7 +101,7 @@ export default function Navbar() {
           <div className="logo">
             <Link href={"/"}>
               <Image
-                src="/Images/Nova_black.svg"
+                src="/Images/Logos/Nova_black.svg"
                 alt="nova"
                 width={64}
                 height={0}

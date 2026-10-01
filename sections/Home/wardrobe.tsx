@@ -1,5 +1,5 @@
 import Link from "next/link";
-import WardrobeCard from "@/components/WardrobeCard/wardrobeCard";
+import WardrobeCard from "@/components/Cards/wardrobeCard";
 
 import { moods } from "@/data/navigation";
 

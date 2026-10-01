@@ -4,12 +4,14 @@ import Link from "next/link";
 
 import Hero from "@/sections/Home/hero"
 import Wardrobe from "@/sections/Home/wardrobe"
+import Products from "@/sections/Home/products";
 
 export default function Home() {
   return (
    <main>
     <Hero/>
     <Wardrobe/>
+    <Products/>
    </main>
   );
 }
