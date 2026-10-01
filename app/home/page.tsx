@@ -5,6 +5,9 @@ import Link from "next/link";
 import Hero from "@/sections/Home/hero"
 import Wardrobe from "@/sections/Home/wardrobe"
 import Products from "@/sections/Home/products";
+import NovaEdit from "@/sections/Home/novaEdit";
+import MembersBanner from "@/sections/Home/members";
+import Newsletter from "@/sections/Home/newsLetter";
 
 export default function Home() {
   return (
@@ -12,6 +15,9 @@ export default function Home() {
     <Hero/>
     <Wardrobe/>
     <Products/>
+    <NovaEdit/>
+    <MembersBanner/>
+    <Newsletter/>
    </main>
   );
 }
