@@ -8,6 +8,7 @@ import Products from "@/sections/Home/products";
 import NovaEdit from "@/sections/Home/novaEdit";
 import MembersBanner from "@/sections/Home/members";
 import Newsletter from "@/sections/Home/newsLetter";
+import LoginPage from "../login/page";
 
 export default function Home() {
   return (
