@@ -9,8 +9,13 @@ type PaginationProps = {
 export default function Pagination({ current, total, basePath }: PaginationProps) {
   const pageHref = (p: number) => `${basePath}?page=${p}`;
 
-  const pages = Array.from({ length: Math.min(4, total) }, (_, i) => i + 1);
-  const showLastPage = total > pages.length;
+  const windowSize = 4;
+  let start = Math.max(1, current - Math.floor(windowSize / 2));
+  const end = Math.min(total, start + windowSize - 1);
+  start = Math.max(1, end - windowSize + 1);
+
+  const pages = Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  const showLastPage = end < total;
 
   return (
     <nav className="mt-10 flex items-center justify-center gap-2">

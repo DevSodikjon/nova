@@ -105,7 +105,7 @@ export const product = [
   },
   // Second
   {
-    id: "drape-column-dress",
+    id: "drape-column-dress1",
     name: "Drape Column Dress",
     category: "Dresses · New season",
     price: 248,
@@ -116,7 +116,7 @@ export const product = [
     badge: "New",
   },
   {
-    id: "merino-rib-cardigan",
+    id: "merino-rib-cardigan1",
     name: "Merino Rib Cardigan",
     category: "Knitwear · Oatmeal",
     price: 168,
@@ -126,7 +126,7 @@ export const product = [
     alt: "Woman wearing an oatmeal ribbed cardigan and trousers",
   },
   {
-    id: "arc-tailored-trouser",
+    id: "arc-tailored-trouser1",
     name: "Arc Tailored Trouser",
     category: "Trousers · Graphite",
     price: 189,
@@ -136,7 +136,7 @@ export const product = [
     alt: "Woman wearing graphite wide-leg tailored trousers",
   },
   {
-    id: "sculpted-wool-coat",
+    id: "sculpted-wool-coat1",
     name: "Sculpted Wool Coat",
     category: "Outerwear · Mineral",
     price: 398,
@@ -148,7 +148,7 @@ export const product = [
   },
   // Third
   {
-    id: "drape-column-dress",
+    id: "drape-column-dress2",
     name: "Drape Column Dress",
     category: "Dresses · New season",
     price: 248,
@@ -159,7 +159,7 @@ export const product = [
     badge: "New",
   },
   {
-    id: "merino-rib-cardigan",
+    id: "merino-rib-cardigan2",
     name: "Merino Rib Cardigan",
     category: "Knitwear · Oatmeal",
     price: 168,
@@ -169,7 +169,7 @@ export const product = [
     alt: "Woman wearing an oatmeal ribbed cardigan and trousers",
   },
   {
-    id: "arc-tailored-trouser",
+    id: "arc-tailored-trouser2",
     name: "Arc Tailored Trouser",
     category: "Trousers · Graphite",
     price: 189,
@@ -179,7 +179,7 @@ export const product = [
     alt: "Woman wearing graphite wide-leg tailored trousers",
   },
   {
-    id: "sculpted-wool-coat",
+    id: "sculpted-wool-coat2",
     name: "Sculpted Wool Coat",
     category: "Outerwear · Mineral",
     price: 398,
