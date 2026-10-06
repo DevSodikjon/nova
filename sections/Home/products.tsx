@@ -1,6 +1,6 @@
 import Link from "next/link";
 import ProductCard from "@/components/Cards/productCard";
-import { product } from "@/data/navigation";
+import { product } from "@/data/products";
 
 export default function Product() {
   return (

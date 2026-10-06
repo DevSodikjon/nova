@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Product } from "@/data/products";
 
 type ProductCardProps = {
   id: string;
@@ -8,7 +9,7 @@ type ProductCardProps = {
   price: number;
   rating: number;
   reviews: number;
-  image: string;
+  images: string[];
   alt: string;
   badge?: String;
 };
@@ -20,18 +21,19 @@ export default function ProductCard({
   price,
   rating,
   reviews,
-  image,
+  images,
   alt,
   badge,
 }: ProductCardProps) {
+
   return (
-    <div className="w-full">
+    <div className="w-full" >
       <Link
         href={`/productDetails/${id}`}
         className="group relative block aspect-[4/5] w-full overflow-hidden rounded-md"
       >
         <Image
-          src={image}
+          src={images[0]}
           alt={alt}
           fill
           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"

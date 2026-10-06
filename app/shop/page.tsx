@@ -3,7 +3,7 @@ import ProductCard from "@/components/Cards/productCard";
 import ShopFilters from "@/components/Shop/ShopFilters";
 import ActiveFilters from "@/components/Shop/ActiveFilters";
 import Pagination from "@/components/Shop/Pagination";
-import { product } from "@/data/navigation";
+import { product } from "@/data/products";
 
 const PER_PAGE = 9;
 
