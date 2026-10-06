@@ -2,25 +2,9 @@
 
 import { useState } from "react";
 
-const categories = [
-  { name: "All clothing", count: 126 },
-  { name: "Dresses", count: 24 },
-  { name: "Knitwear", count: 31 },
-  { name: "Tops & shirts", count: 28 },
-  { name: "Trousers", count: 19 },
-  { name: "Outerwear", count: 14 },
-];
-
-const sizes = ["XS", "S", "M", "L", "XL", "0", "2", "4"];
-
-const colors = [
-  { name: "Ink", hex: "#1c1c1a" },
-  { name: "Chalk", hex: "#e9e5db" },
-  { name: "Mineral", hex: "#3c5048" },
-  { name: "Cocoa", hex: "#6b4a37" },
-  { name: "Olive", hex: "#6b6b4a" },
-  { name: "Clay", hex: "#a66b4a" },
-];
+import {categories} from "@/data/filters"
+import {sizes} from "@/data/filters"
+import {colors} from "@/data/filters"
 
 export default function ShopFilters() {
   const [activeCategory, setActiveCategory] = useState("All clothing");
@@ -28,8 +12,15 @@ export default function ShopFilters() {
 
   return (
     <aside className="flex w-full flex-col gap-8 lg:w-64 lg:shrink-0">
-      <label className="flex items-center gap-2 rounded-md border border-black/15 bg-white px-4 py-2.5">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b6b63" strokeWidth="2">
+      <label className="flex items-center gap-2 rounded-md border border-black/15 bg-white px-4 py-3">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#6b6b63"
+          strokeWidth="2"
+        >
           <circle cx="11" cy="11" r="7" />
           <path d="m20 20-4-4" />
         </svg>

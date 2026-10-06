@@ -25,7 +25,7 @@ export default function Product() {
         </div>
 
         <div className="mt-8 sm:mt-10 grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-8">
-          {product.map((product) => (
+          {product.slice(0, 4).map((product) => (
             <ProductCard key={product.id} {...product} />
           ))}
         </div>

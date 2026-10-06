@@ -27,7 +27,7 @@ export default function ProductCard({
   return (
     <div className="w-full">
       <Link
-        href={`/product/${id}`}
+        href={`/productDetails/${id}`}
         className="group relative block aspect-[4/5] w-full overflow-hidden rounded-md"
       >
         <Image
@@ -54,7 +54,7 @@ export default function ProductCard({
         </span>
       </Link>
 
-      <Link href={`/product/${id}`} className="mt-3 flex items-start justify-between gap-2">
+      <Link href={`/productDetails/${id}`} className="mt-3 flex items-start justify-between gap-2">
         <h3 className="text-sm font-semibold text-black">{name}</h3>
         <span className="whitespace-nowrap text-sm font-semibold text-black">${price}</span>
       </Link>
