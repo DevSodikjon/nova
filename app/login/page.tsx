@@ -1,20 +1,47 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+
 export default function LoginPage() {
+  const { login } = useAuth();
+  const router = useRouter();
+  const [error, setError] = useState("");
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError("");
+
+    const form = new FormData(e.currentTarget);
+    const email = form.get("email") as string;
+    const password = form.get("password") as string;
+
+    const success = login(email, password);
+
+    if (success) {
+      router.push("/account");
+    } else {
+      setError("Email yoki password noto'g'ri");
+    }
+  }
+
   return (
     <div className="bg-[#faf8f3]">
       <div className="container py-10 sm:py-16">
         <div className="grid grid-cols-1 overflow-hidden lg:grid-cols-2 lg:min-h-[640px]">
           <div className="relative hidden lg:block">
-          <Image
-            src="/images/login_image.svg"
-            alt="Woman in a grey turtleneck and trousers standing beside a travertine arch"
-            fill
-            sizes="50vw"
-            className="object-cover"
-            priority
-          />
+            <Image
+              src="/images/login_image.svg"
+              alt="Woman in a grey turtleneck and trousers standing beside a travertine arch"
+              fill
+              sizes="50vw"
+              className="object-cover"
+              priority
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-black/0" />
             <div className="absolute bottom-10 left-10 right-10 text-white">
               <p className="text-xs font-semibold uppercase tracking-widest">
@@ -39,13 +66,17 @@ export default function LoginPage() {
                 Access orders, saved pieces and a checkout shaped around you.
               </p>
 
-              <form className="mt-8 flex flex-col gap-5">
+              <form
+                onSubmit={handleSubmit}
+                className="mt-8 flex flex-col gap-5"
+              >
                 <label className="flex flex-col gap-2">
                   <span className="text-sm font-semibold text-black">
                     Email address
                   </span>
                   <input
                     type="email"
+                    name="email"
                     required
                     placeholder="you@example.com"
                     className="rounded-md border border-black/15 bg-[#faf8f3] px-4 py-3 text-sm text-black outline-none placeholder:text-[#9a9a92] focus:border-black"
@@ -58,11 +89,13 @@ export default function LoginPage() {
                   </span>
                   <input
                     type="password"
+                    name="password"
                     required
                     placeholder="••••••••••"
                     className="rounded-md border border-black/15 bg-[#faf8f3] px-4 py-3 text-sm text-black outline-none placeholder:text-[#9a9a92] focus:border-black"
                   />
                 </label>
+                {error && <p className="text-sm text-red-600">{error}</p>}
 
                 <div className="flex items-center justify-between text-sm">
                   <label className="flex items-center gap-2">
