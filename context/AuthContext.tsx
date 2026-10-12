@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, type ReactNode } from "react";
-import { users, type User } from "@/data/users";
+import { users, slugify, type User } from "@/data/users";
 
 type AuthContextType = {
   user: User | null;
@@ -46,13 +46,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (exists) return false;
 
-    const newUser: User = {
-      id: `u${users.length + 1}`,
-      firstName,
-      lastName,
-      email,
-      password,
-    };
+  const newUser: User = { id: slugify(email), firstName, lastName, email, password };
 
     users.push(newUser);
     setUser(newUser);

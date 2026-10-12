@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { product } from "@/data/products";
+import { product, type Product } from "@/data/products";
 import ProductGallery from "@/components/Products/ProductGallery";
 import SizeColorSelector from "@/components/Products/SizeColorSelector";
 import QuantityStepper from "@/components/Products/QuantityStepper";
@@ -13,14 +13,30 @@ export default async function ProductDetails({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+
   const item = product.find((p) => p.id === id);
 
   if (!item) notFound();
 
+  const mainCategory = item.category.split("·")[0].trim();
+
+  const curated = (item.completeTheLook ?? [])
+    .map((id) => product.find((p) => p.id === id))
+    .filter((p): p is Product => Boolean(p));
+
+  // 2) Zaxira: har bir boshqa kategoriyadan bittadan
+  const seen = new Set<string>([mainCategory]);
+  const fallback = product.filter((p) => {
+    const cat = p.category.split("·")[0].trim();
+    if (p.id === item.id || seen.has(cat)) return false;
+    seen.add(cat);
+    return true;
+  });
+
+  const related = (curated.length > 0 ? curated : fallback).slice(0, 4);
+
   // const related = product.filter((p) => p.id !== item.id).slice(0, 4);
-  const related = product.filter(
-  (p) => p.name === item.name
-);
+  // const related = product.filter((p) => p.category === item.category);ß
 
   return (
     <div className="bg-[#faf8f3] py-8 sm:py-12">
@@ -79,7 +95,7 @@ export default async function ProductDetails({
             </p>
 
             <div className="mt-6">
-            <SizeColorSelector variants={item.variants} />
+              <SizeColorSelector variants={item.variants} />
             </div>
 
             <div className="mt-6 flex items-center justify-between">

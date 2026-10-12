@@ -3,10 +3,10 @@ export type User = {
   firstName: string;
   lastName: string;
   email: string;
-  password: string; // faqat sinov uchun — haqiqiy loyihada parol hech qachon shunday saqlanmaydi
+  password: string; // faqat sinov uchun
 };
 
-function slugify(text: string): string {
+export function slugify(text: string): string {
   return text
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
