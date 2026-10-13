@@ -9,7 +9,7 @@ export type Product = {
   id: string;
   name: string;
   category: string;
-  completeTheLook?: string[];
+ consideredTogether?: string[];
   price: number;
   rating: number;
   reviews: number;
@@ -42,7 +42,12 @@ const rawProducts: Omit<Product, "id">[] = [
       "/Images/Products/Drape/Product_Drape_3.svg",
       "/Images/Products/Drape/Product_Drape_4.svg",
     ],
-    completeTheLook: ["form-cotton-shirt", "arc-tailored-trouser"],
+    consideredTogether: [
+      "form-cotton-shirt",
+      "arc-tailored-trouser",
+      "veil-leather-slingback",
+      "loop-sculptural-cuff",
+    ],
     alt: "Woman wearing a brown draped column dress",
     badge: "New",
     description:
@@ -64,7 +69,7 @@ const rawProducts: Omit<Product, "id">[] = [
   },
   {
     name: "Sculpted Wool Coat",
-    category: "Dresses · New season",
+    category: "Outerwear · Mineral",
     price: 398,
     rating: 5,
     reviews: 19,
@@ -73,6 +78,12 @@ const rawProducts: Omit<Product, "id">[] = [
       "/Images/Products/Sculpted/Product_Sculpted_1.jpeg",
       "/Images/Products/Sculpted/Product_Sculpted_2.jpeg",
       "/Images/Products/Sculpted/Product_Sculpted_3.jpeg",
+    ],
+    consideredTogether: [
+      "arc-tailored-trouser",
+      "fine-cashmere-crew",
+      "veil-leather-slingback",
+      "loop-sculptural-cuff",
     ],
     alt: "Woman wearing a brown draped column dress",
     badge: "New",
@@ -96,7 +107,7 @@ const rawProducts: Omit<Product, "id">[] = [
   },
   {
     name: "Arc Tailored Trouser",
-    category: "Outerwear · Mineral",
+    category: "Trousers · Graphite",
     price: 189,
     rating: 4.7,
     reviews: 38,
@@ -105,6 +116,12 @@ const rawProducts: Omit<Product, "id">[] = [
       "/Images/Products/Arc/Product_Arc_1.jpeg",
       "/Images/Products/Arc/Product_Arc_2.jpeg",
       "/Images/Products/Arc/Product_Arc_3.jpeg",
+    ],
+    consideredTogether: [
+      "form-cotton-shirt",
+      "merino-rib-cardigan",
+      "veil-leather-slingback",
+      "loop-sculptural-cuff",
     ],
     alt: "Woman wearing a brown draped column dress",
     badge: "New",
@@ -136,6 +153,12 @@ const rawProducts: Omit<Product, "id">[] = [
       "/Images/Products/Merino/Product_Merino_1.jpeg",
       "/Images/Products/Merino/Product_Merino_2.jpeg",
       "/Images/Products/Merino/Product_Merino_3.jpeg",
+    ],
+    consideredTogether: [
+      "arc-tailored-trouser",
+      "contour-knit-tank",
+      "veil-leather-slingback",
+      "loop-sculptural-cuff",
     ],
     alt: "Woman wearing a brown draped column dress",
     badge: "New",
@@ -169,6 +192,12 @@ const rawProducts: Omit<Product, "id">[] = [
       "/Images/Products/Bias_Skirt/Product_Bias_Skirt_3.jpeg",
       "/Images/Products/Bias_Skirt/Product_Bias_Skirt_4.jpeg",
     ],
+    consideredTogether: [
+      "fine-cashmere-crew",
+      "relaxed-twill-jacket",
+      "veil-leather-slingback",
+      "loop-sculptural-cuff",
+    ],
     alt: "Woman wearing a brown draped column dress",
     badge: "New",
     description:
@@ -199,6 +228,12 @@ const rawProducts: Omit<Product, "id">[] = [
       "/Images/Products/Cotton_Shirt/Product_Cotton_Shirt_1.jpeg",
       "/Images/Products/Cotton_Shirt/Product_Cotton_Shirt_2.jpeg",
       "/Images/Products/Cotton_Shirt/Product_Cotton_Shirt_3.jpeg",
+    ],
+    consideredTogether: [
+      "arc-tailored-trouser",
+      "bias-satin-skirt",
+      "veil-leather-slingback",
+      "loop-sculptural-cuff",
     ],
     alt: "Woman wearing a brown draped column dress",
     badge: "New",
@@ -231,6 +266,12 @@ const rawProducts: Omit<Product, "id">[] = [
       "/Images/Products/Knit_Tank/Product_Knit_Tank_2.jpeg",
       "/Images/Products/Knit_Tank/Product_Knit_Tank_3.jpeg",
     ],
+    consideredTogether: [
+      "arc-tailored-trouser",
+      "relaxed-twill-jacket",
+      "veil-leather-slingback",
+      "loop-sculptural-cuff",
+    ],
     alt: "Woman wearing a brown draped column dress",
     badge: "New",
     description:
@@ -261,6 +302,12 @@ const rawProducts: Omit<Product, "id">[] = [
       "/Images/Products/Twill_Jacket/Product_Twill_Jacket_3.jpeg",
       "/Images/Products/Twill_Jacket/Product_Twill_Jacket_4.jpeg",
       "/Images/Products/Twill_Jacket/Product_Twill_Jacket_5.jpeg",
+    ],
+    consideredTogether: [
+      "contour-knit-tank",
+      "arc-tailored-trouser",
+      "veil-leather-slingback",
+      "loop-sculptural-cuff",
     ],
     alt: "Woman wearing a brown draped column dress",
     badge: "New",
@@ -294,6 +341,12 @@ const rawProducts: Omit<Product, "id">[] = [
       "/Images/Products/Cashmere/Product_Cashmere_3.jpeg",
       "/Images/Products/Cashmere/Product_Cashmere_4.jpeg",
     ],
+    consideredTogether: [
+      "arc-tailored-trouser",
+      "bias-satin-skirt",
+      "veil-leather-slingback",
+      "loop-sculptural-cuff",
+    ],
     alt: "Woman wearing a brown draped column dress",
     badge: "New",
     description:
@@ -324,6 +377,12 @@ const rawProducts: Omit<Product, "id">[] = [
       "/Images/Products/Slingback/Product_Slingback_1.jpeg",
       "/Images/Products/Slingback/Product_Slingback_2.jpeg",
       "/Images/Products/Slingback/Product_Slingback_3.jpeg",
+    ],
+    consideredTogether: [
+      "drape-column-dress",
+      "arc-tailored-trouser",
+      "bias-satin-skirt",
+      "loop-sculptural-cuff",
     ],
     alt: "Black leather slingback heels on a travertine stone slab",
     description:
@@ -356,6 +415,12 @@ const rawProducts: Omit<Product, "id">[] = [
       "/Images/Products/Cuff/Product_Cuff_1.jpeg",
       "/Images/Products/Cuff/Product_Cuff_2.jpeg",
       "/Images/Products/Cuff/Product_Cuff_3.jpeg",
+    ],
+    consideredTogether: [
+      "drape-column-dress",
+      "form-cotton-shirt",
+      "merino-rib-cardigan",
+      "veil-leather-slingback",
     ],
     alt: "Sculptural silver cuff bracelet resting on a stone slab",
     description:

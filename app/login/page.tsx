@@ -6,26 +6,27 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { authErrorMessage } from "@/lib/authErrors";
 
 export default function LoginPage() {
   const { login } = useAuth();
   const router = useRouter();
   const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
+    setSubmitting(true);
 
     const form = new FormData(e.currentTarget);
-    const email = form.get("email") as string;
-    const password = form.get("password") as string;
-
-    const success = login(email, password);
-
-    if (success) {
+    try {
+      await login(form.get("email") as string, form.get("password") as string);
       router.push("/account");
-    } else {
-      setError("Email yoki password noto'g'ri");
+    } catch (err) {
+      setError(authErrorMessage(err));
+    } finally {
+      setSubmitting(false);
     }
   }
 

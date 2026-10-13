@@ -1,61 +1,74 @@
 "use client";
 
-import { createContext, useContext, useState, type ReactNode } from "react";
-import { users, slugify, type User } from "@/data/users";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
+
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  signOut,
+  type User,
+} from "firebase/auth";
+
+import { auth } from "@/lib/firebase";
 
 type AuthContextType = {
   user: User | null;
-  login: (email: string, password: string) => boolean;
-  logout: () => void;
+  loading: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
   register: (
     firstName: string,
     lastname: string,
     email: string,
     password: string,
-  ) => boolean;
+  ) => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = (email: string, password: string) => {
-    const found = users.find(
-      (u) => u.email === email && u.password === password,
-    );
+  useEffect(() => {
+    return onAuthStateChanged(auth, (u) => {
+      setUser(u);
+      setLoading(false);
+    });
+  }, []);
 
-    if (found) {
-      setUser(found);
-      return true;
-    }
-    return false;
+  const login = async (email: string, password: string) => {
+    const cred = await signInWithEmailAndPassword(auth, email, password);
+    setUser(cred.user);
   };
 
-  const logout = () => setUser(null);
-
-  const register = (
+  const register = async (
     firstName: string,
     lastName: string,
     email: string,
     password: string,
   ) => {
-    const exists = users.some(
-      (u) => u.email === email && u.password === password,
-    );
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(cred.user, {
+      displayName: `${firstName}, ${lastName}`,
+    });
+    setUser(cred.user);
+  };
 
-    if (exists) return false;
-
-  const newUser: User = { id: slugify(email), firstName, lastName, email, password };
-
-    users.push(newUser);
-    setUser(newUser);
-
-    return true;
+  const logout = async () => {
+    await signOut(auth);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

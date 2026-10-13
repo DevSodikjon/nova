@@ -20,7 +20,7 @@ export default async function ProductDetails({
 
   const mainCategory = item.category.split("·")[0].trim();
 
-  const curated = (item.completeTheLook ?? [])
+  const curated = (item.consideredTogether ?? [])
     .map((id) => product.find((p) => p.id === id))
     .filter((p): p is Product => Boolean(p));
 

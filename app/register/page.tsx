@@ -1,5 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+import { useAuth } from "@/context/AuthContext";
+import { authErrorMessage } from "@/lib/authErrors";
 
 const benefits = [
   "Early access to seasonal collections",
@@ -8,6 +16,42 @@ const benefits = [
 ];
 
 export default function RegisterPage() {
+  const { register } = useAuth();
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError("");
+
+    const form = new FormData(e.currentTarget);
+    const password = form.get("password") as string;
+    const confirm = form.get("confirm") as string;
+
+    if (password !== confirm) {
+      setError("Password is the same");
+      return;
+    }
+
+    setSubmitting(true);
+
+    try {
+      await register(
+        form.get("firstName") as string,
+        form.get("lastName") as string,
+        form.get("email") as string,
+        password,
+      );
+
+      router.push("/account");
+    } catch (err) {
+      setError(authErrorMessage(err));
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   return (
     <div className="container py-10 sm:py-16">
       <div className="grid grid-cols-1 overflow-hidden rounded-2xl lg:grid-cols-2 lg:min-h-[640px]">
@@ -25,7 +69,7 @@ export default function RegisterPage() {
               collections.
             </p>
 
-            <form className="mt-8 flex flex-col gap-5">
+            <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-5">
               <div className="grid grid-cols-2 gap-4">
                 <label className="flex flex-col gap-2">
                   <span className="text-sm font-semibold text-black">
@@ -33,6 +77,7 @@ export default function RegisterPage() {
                   </span>
                   <input
                     type="text"
+                    name="firstName"
                     required
                     placeholder="First name"
                     className="rounded-md border border-black/15 bg-[#faf8f3] px-4 py-3 text-sm text-black outline-none placeholder:text-[#9a9a92] focus:border-black"
@@ -45,31 +90,32 @@ export default function RegisterPage() {
                   </span>
                   <input
                     type="text"
+                    name="lastName"
                     required
                     placeholder="Last name"
                     className="rounded-md border border-black/15 bg-[#faf8f3] px-4 py-3 text-sm text-black outline-none placeholder:text-[#9a9a92] focus:border-black"
                   />
                 </label>
               </div>
-
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-semibold text-black">
                   Email address
                 </span>
                 <input
                   type="email"
+                  name="email"
                   required
                   placeholder="you@example.com"
                   className="rounded-md border border-black/15 bg-[#faf8f3] px-4 py-3 text-sm text-black outline-none placeholder:text-[#9a9a92] focus:border-black"
                 />
               </label>
-
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-semibold text-black">
                   Password
                 </span>
                 <input
                   type="password"
+                  name="password"
                   required
                   placeholder="••••••••••"
                   className="rounded-md border border-black/15 bg-[#faf8f3] px-4 py-3 text-sm text-black outline-none placeholder:text-[#9a9a92] focus:border-black"
@@ -81,22 +127,22 @@ export default function RegisterPage() {
                   Use 8+ characters with an uppercase letter, number and symbol.
                 </p>
               </label>
-
               <label className="flex flex-col gap-2">
                 <span className="text-sm font-semibold text-black">
                   Confirm password
                 </span>
                 <input
                   type="password"
+                  name="confirm"
                   required
                   placeholder="••••••••••"
                   className="rounded-md border border-black/15 bg-[#faf8f3] px-4 py-3 text-sm text-black outline-none placeholder:text-[#9a9a92] focus:border-black"
                 />
               </label>
-
-              <label className="flex items-start gap-2 text-sm text-[#6b6b63]">
+              {/* <label className="flex items-start gap-2 text-sm text-[#6b6b63]">
                 <input
                   type="checkbox"
+                  name=""
                   required
                   className="mt-0.5 h-4 w-4 accent-[#2e3f38]"
                 />
@@ -118,7 +164,6 @@ export default function RegisterPage() {
                   .
                 </span>
               </label>
-
               <label className="flex items-start gap-2 text-sm text-[#6b6b63]">
                 <input
                   type="checkbox"
@@ -128,13 +173,15 @@ export default function RegisterPage() {
                   Keep me close to new collections, studio stories and private
                   offers.
                 </span>
-              </label>
+              </label> */}
+              {error && <p className="text-sm text-red-600">{error}</p>}
 
               <button
                 type="submit"
-                className="mt-1 rounded-md bg-black py-3 text-sm font-medium text-white transition hover:bg-black/85"
+                disabled={submitting}
+                className="... disabled:opacity-60"
               >
-                Create account
+                {submitting ? "Creating account..." : "Create account"}
               </button>
             </form>
 

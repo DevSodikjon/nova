@@ -6,9 +6,12 @@ import { useState } from "react";
 import { headerLinks } from "@/data/navigation";
 import { usePathname } from "next/navigation";
 
+import { useAuth } from "@/context/AuthContext";
+
 const actions = [
   {
     name: "Search",
+    href: "search",
     icon: (
       <svg
         width="17"
@@ -29,6 +32,7 @@ const actions = [
   },
   {
     name: "Wishlist",
+    href: "wishlist",
     icon: (
       <svg
         width="17"
@@ -48,6 +52,7 @@ const actions = [
   },
   {
     name: "Cart",
+    href: "cart",
     icon: (
       <svg
         width="17"
@@ -70,6 +75,7 @@ const actions = [
   },
   {
     name: "Account",
+    href: "account",
     icon: (
       <svg
         width="17"
@@ -93,6 +99,14 @@ const actions = [
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const { user, loading } = useAuth();
+
+  const accountHref = user ? "/account" : "/login";
+  const accountLabel =
+    !loading && user
+      ? (user.displayName?.split(" ")[0] ?? "Account")
+      : "Account";
 
   return (
     <header className="sticky top-0 z-50 bg-white">
@@ -141,40 +155,50 @@ export default function Navbar() {
 
           {/* Desktop actions */}
           <div className="actions hidden lg:flex gap-[22px]">
-            {actions.map((action) => (
-              <button
-                key={action.name}
-                className="
-                  flex
-                  items-center
-                  gap-2
-                  font-medium
-                  text-black
-                  transition-all
-                  duration-200
-                  hover:text-gray-600
-                  hover:scale-[1.03]
-                  cursor-pointer
-                "
-              >
-                {action.icon}
-                {action.name}
-              </button>
-            ))}
+            {actions.map((action) =>
+              action.name === "Account" ? (
+                <Link
+                  key={action.name}
+                  href={accountHref}
+                  className="flex items-center gap-2 font-medium text-black transition-all duration-200 hover:text-gray-600 hover:scale-[1.03] cursor-pointer"
+                >
+                  {action.icon}
+                  <span className="max-w-[100px] truncate">{accountLabel}</span>
+                </Link>
+              ) : (
+                <button
+                  key={action.name}
+                  className="flex items-center gap-2 font-medium text-black transition-all duration-200 hover:text-gray-600 hover:scale-[1.03] cursor-pointer"
+                >
+                  {action.icon}
+                  {action.name}
+                </button>
+              )
+            )}
           </div>
 
           {/* Mobile / tablet actions: icons only + hamburger */}
           <div className="flex items-center gap-4 lg:hidden">
-            {actions.map((action) => (
-              <button
-                key={action.name}
-                aria-label={action.name}
-                className="flex items-center justify-center text-black transition-transform duration-200 hover:scale-110 cursor-pointer"
-              >
-                {action.icon}
-              </button>
-            ))}
-
+            {actions.map((action) =>
+              action.name === "Account" ? (
+                <Link
+                  key={action.name}
+                  href={accountHref}
+                  aria-label={accountLabel}
+                  className="flex items-center justify-center text-black transition-transform duration-200 hover:scale-110 cursor-pointer"
+                >
+                  {action.icon}
+                </Link>
+              ) : (
+                <button
+                  key={action.name}
+                  aria-label={action.name}
+                  className="flex items-center justify-center text-black transition-transform duration-200 hover:scale-110 cursor-pointer"
+                >
+                  {action.icon}
+                </button>
+              ),
+            )}
             <button
               aria-label="Menu"
               aria-expanded={menuOpen}
