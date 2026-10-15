@@ -1,26 +1,30 @@
 "use client";
 
-import { useState } from "react";
+type QuantityStepperProps = {
+  value: number;
+  onChange: (value: number) => void;
+  max?: number;
+};
 
-export default function QuantityStepper() {
-  const [qty, setQty] = useState(1);
-
+export default function QuantityStepper({ value, onChange, max = 99 }: QuantityStepperProps) {
   return (
     <div className="flex items-center gap-4">
       <button
         type="button"
         aria-label="Decrease quantity"
-        onClick={() => setQty((q) => Math.max(1, q - 1))}
-        className="flex h-9 w-9 items-center justify-center rounded-md border border-black/15 text-black"
+        disabled={value <= 1}
+        onClick={() => onChange(value - 1)}
+        className="flex h-9 w-9 items-center justify-center rounded-md border border-black/15 text-black disabled:opacity-40"
       >
         −
       </button>
-      <span className="w-4 text-center text-sm text-black">{qty}</span>
+      <span className="w-4 text-center text-sm text-black">{value}</span>
       <button
         type="button"
         aria-label="Increase quantity"
-        onClick={() => setQty((q) => q + 1)}
-        className="flex h-9 w-9 items-center justify-center rounded-md border border-black/15 text-black"
+        disabled={value >= max}
+        onClick={() => onChange(value + 1)}
+        className="flex h-9 w-9 items-center justify-center rounded-md border border-black/15 text-black disabled:opacity-40"
       >
         +
       </button>

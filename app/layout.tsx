@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { AuthProvider } from "@/context/AuthContext";
+import { ShopProvider } from "@/context/shopContext";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -40,9 +41,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         className={`${dmSans.variable} ${manrope.variable} min-h-full flex flex-col`}
       >
         <AuthProvider>
+          <ShopProvider>
             <Navbar />
             {children}
             <Footer />
+          </ShopProvider>
         </AuthProvider>
       </body>
     </html>

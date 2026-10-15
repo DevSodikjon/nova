@@ -9,7 +9,7 @@ export type Product = {
   id: string;
   name: string;
   category: string;
- consideredTogether?: string[];
+  consideredTogether?: string[];
   price: number;
   rating: number;
   reviews: number;
@@ -437,3 +437,11 @@ export const product: Product[] = rawProducts.map((p) => ({
   id: slugify(p.name),
   ...p,
 }));
+if (process.env.NODE_ENV !== "production") {
+  const ids = new Set(product.map((p) => p.id));
+  product.forEach((p) => {
+    p.consideredTogether?.forEach((id) => {
+      if (!ids.has(id)) console.warn(`${p.name}: "${id}" mahsuloti topilmadi`);
+    });
+  });
+}

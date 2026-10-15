@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { headerLinks } from "@/data/navigation";
 import { usePathname } from "next/navigation";
+import { useShop } from "@/context/shopContext";
 
 import { useAuth } from "@/context/AuthContext";
 
@@ -32,7 +33,7 @@ const actions = [
   },
   {
     name: "Wishlist",
-    href: "wishlist",
+    href: "/account/wishlist",
     icon: (
       <svg
         width="17"
@@ -99,14 +100,18 @@ const actions = [
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user } = useAuth();
+  const { cartCount } = useShop();
 
-  const { user, loading } = useAuth();
+  const hrefs: Record<string, string | undefined> = {
+    Wishlist: user ? "/account/wishlist" : "/login",
+    Cart: "/cart",
+    Account: user ? "/account" : "/login",
+  };
 
-  const accountHref = user ? "/account" : "/login";
-  const accountLabel =
-    !loading && user
-      ? (user.displayName?.split(" ")[0] ?? "Account")
-      : "Account";
+  const accountLabel = user
+    ? (user.displayName?.split(" ")[0] ?? "Account")
+    : "Account";
 
   return (
     <header className="sticky top-0 z-50 bg-white">
@@ -155,26 +160,29 @@ export default function Navbar() {
 
           {/* Desktop actions */}
           <div className="actions hidden lg:flex gap-[22px]">
-            {actions.map((action) =>
-              action.name === "Account" ? (
-                <Link
-                  key={action.name}
-                  href={accountHref}
-                  className="flex items-center gap-2 font-medium text-black transition-all duration-200 hover:text-gray-600 hover:scale-[1.03] cursor-pointer"
-                >
+            {actions.map((action) => {
+              const href = hrefs[action.name];
+              const label =
+                action.name === "Account"
+                  ? accountLabel
+                  : action.name === "Cart" && cartCount > 0
+                    ? `Cart · ${cartCount}`
+                    : action.name;
+              const cls =
+                "flex items-center gap-2 font-medium text-black transition-all duration-200 hover:text-gray-600 hover:scale-[1.03] cursor-pointer";
+
+              return href ? (
+                <Link key={action.name} href={href} className={cls}>
                   {action.icon}
-                  <span className="max-w-[100px] truncate">{accountLabel}</span>
+                  <span className="max-w-[100px] truncate">{label}</span>
                 </Link>
               ) : (
-                <button
-                  key={action.name}
-                  className="flex items-center gap-2 font-medium text-black transition-all duration-200 hover:text-gray-600 hover:scale-[1.03] cursor-pointer"
-                >
+                <button key={action.name} className={cls}>
                   {action.icon}
-                  {action.name}
+                  {label}
                 </button>
-              )
-            )}
+              );
+            })}
           </div>
 
           {/* Mobile / tablet actions: icons only + hamburger */}
@@ -183,7 +191,7 @@ export default function Navbar() {
               action.name === "Account" ? (
                 <Link
                   key={action.name}
-                  href={accountHref}
+                  href={hrefs}
                   aria-label={accountLabel}
                   className="flex items-center justify-center text-black transition-transform duration-200 hover:scale-110 cursor-pointer"
                 >

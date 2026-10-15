@@ -2,10 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { product, type Product } from "@/data/products";
 import ProductGallery from "@/components/Products/ProductGallery";
-import SizeColorSelector from "@/components/Products/SizeColorSelector";
-import QuantityStepper from "@/components/Products/QuantityStepper";
+// import SizeColorSelector from "@/components/Products/SizeColorSelector";
+// import QuantityStepper from "@/components/Products/QuantityStepper";
 import DetailsAccordion from "@/components/Products/DetailsAccordion";
 import ProductCard from "@/components/Cards/productCard";
+import ProductPurchase from "@/components/Products/ProductPurchase";
 
 export default async function ProductDetails({
   params,
@@ -93,8 +94,11 @@ export default async function ProductDetails({
               {item.description ??
                 "A considered piece designed for everyday wear, cut from quality materials with clean, lasting lines."}
             </p>
-
             <div className="mt-6">
+              <ProductPurchase item={item} />
+            </div>
+
+            {/* <div className="mt-6">
               <SizeColorSelector variants={item.variants} />
             </div>
 
@@ -104,7 +108,7 @@ export default async function ProductDetails({
                 <span className="h-2 w-2 rounded-full bg-green-600" />
                 In stock · ships in 1–2 days
               </p>
-            </div>
+            </div> */}
 
             <div className="mt-6 flex flex-col gap-3">
               <button
