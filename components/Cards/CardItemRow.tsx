@@ -17,7 +17,7 @@ function stockInfo(stock: number | undefined) {
   return { text: "In stock", className: "text-[#3c5048]" };
 }
 
-export default function CartItemRow({ line, onQtyChange, onRemove }: CartItemRowProps) {
+export default function CardItemRow({ line, onQtyChange, onRemove }: CartItemRowProps) {
   const { item, product: p, variant, lineTotal } = line;
   const stock = stockInfo(variant?.stock);
   const sizeLabel = item.size.toLowerCase() === "one size" ? "One size" : `Size ${item.size}`;

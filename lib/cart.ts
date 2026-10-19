@@ -24,7 +24,7 @@ const round2 = (n: number) => Math.round(n * 100) / 100;
 // $248 yoki $42.72: butun son bo'lsa kasrsiz
 export const money = (n: number) => `$${Number.isInteger(n) ? n : n.toFixed(2)}`;
 
-export function buildCartLines(cart: CartItem[]): CartLine[] {
+export function buildCardLines(cart: CartItem[]): CartLine[] {
   const lines: CartLine[] = [];
 
   for (const item of cart) {
@@ -38,7 +38,7 @@ export function buildCartLines(cart: CartItem[]): CartLine[] {
   return lines;
 }
 
-export function getCartTotals(lines: CartLine[]): CartTotals {
+export function getCardTotals(lines: CartLine[]): CartTotals {
   const subtotal = round2(lines.reduce((sum, l) => sum + l.lineTotal, 0));
   const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
   const tax = round2(subtotal * TAX_RATE);
