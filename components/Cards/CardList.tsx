@@ -1,5 +1,5 @@
 import type { CartItem } from "@/context/shopContext";
-import type { CartLine } from "@/lib/cart";
+import type { CartLine } from "@/lib/card";
 import CartItemRow from "./CardItemRow";
 
 type CartListProps = {

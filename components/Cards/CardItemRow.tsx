@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import QuantityStepper from "@/components/Products/QuantityStepper";
-import type { CartLine } from "@/lib/cart";
-import { money } from "@/lib/cart";
+import type { CartLine } from "@/lib/card";
+import { money } from "@/lib/card";
 
 type CartItemRowProps = {
   line: CartLine;

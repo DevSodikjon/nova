@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
-import { money, type CartTotals } from "@/lib/cart";
+import { money, type CartTotals } from "@/lib/card";
 
 function Row({ label, value }: { label: string; value: string }) {
   return (

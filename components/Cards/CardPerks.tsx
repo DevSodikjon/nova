@@ -1,4 +1,4 @@
-import { FREE_SHIPPING_THRESHOLD } from "@/lib/cart";
+import { FREE_SHIPPING_THRESHOLD } from "@/lib/card";
 
 const iconProps = {
   width: 22,
