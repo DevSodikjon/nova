@@ -23,3 +23,25 @@ h4 {
 p {
   font-family: "DM Sans", sans-serif;
 }
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes check-pop {
+  0%   { transform: scale(0.4); }
+  60%  { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+@keyframes check-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.toast-in   { animation: toast-in 0.25s ease-out; }
+.check-pop  { animation: check-pop 0.4s ease-out; }
+.check-draw { stroke-dasharray: 24; stroke-dashoffset: 24; animation: check-draw 0.35s 0.25s ease-out forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .toast-in, .check-pop { animation: none; }
+  .check-draw { animation: none; stroke-dashoffset: 0; }
+}

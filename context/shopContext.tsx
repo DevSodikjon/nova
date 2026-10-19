@@ -26,12 +26,16 @@ type ShopContextType = {
   toggleWishlist: (productId: string) => void;
   cart: CartItem[];
   cartCount: number;
-  addToCart: (item: CartItem) => boolean;
+  // addToCart: (item: CartItem) => boolean;
 
   // For Cart
   ready: boolean;
   setCartQty: (key: CartKey, qty: number) => void;
   removeFromCart: (key: CartKey) => void;
+
+  // add to cart animation
+  lastAdded: { id: number; item: CartItem } | null;
+  addToCart: (item: CartItem, notify?: boolean) => boolean;
 };
 
 const ShopContext = createContext<ShopContextType | null>(null);
@@ -58,6 +62,8 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [loadedFor, setLoadedFor] = useState<string | null>(null);
+
+  const [lastAdded, setLastAdded] = useState<{ id: number; item: CartItem } | null>(null);
 
   // 1) Foydalanuvchi aniqlanganda shu accountning ma'lumotini o'qiydi
   useEffect(() => {
@@ -103,17 +109,16 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     );
   };
 
-  const addToCart = (item: CartItem) => {
-    if (!requireUser()) return false;
-    setCart((list) =>
-      list.some((x) => sameItem(x, item))
-        ? list.map((x) =>
-            sameItem(x, item) ? { ...x, qty: x.qty + item.qty } : x,
-          )
-        : [...list, item],
-    );
-    return true;
-  };
+  const addToCart = (item: CartItem, notify = true) => {
+  if (!requireUser()) return false;
+  setCart((list) =>
+    list.some((x) => sameItem(x, item))
+      ? list.map((x) => (sameItem(x, item) ? { ...x, qty: x.qty + item.qty } : x))
+      : [...list, item]
+  );
+  if (notify) setLastAdded({ id: Date.now(), item });
+  return true;
+};
 
   const setCartQty = (key: CartKey, qty: number) => {
     if (!requireUser()) return;
@@ -131,6 +136,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   return (
     <ShopContext.Provider
       value={{
+        lastAdded,
         wishlist,
         ready,
         setCartQty,

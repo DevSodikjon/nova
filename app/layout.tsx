@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { AuthProvider } from "@/context/AuthContext";
 import { ShopProvider } from "@/context/shopContext";
+import AddedToast from "@/components/Cards/AddedToast";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Navbar />
             {children}
             <Footer />
+            <AddedToast />
           </ShopProvider>
         </AuthProvider>
       </body>
