@@ -110,7 +110,7 @@ export default async function ProductDetails({
               </p>
             </div> */}
 
-            <div className="mt-6 flex flex-col gap-3">
+            {/* <div className="mt-6 flex flex-col gap-3">
               <button
                 type="button"
                 className="flex items-center justify-center gap-2 rounded-md bg-black py-3.5 text-sm font-medium text-white transition hover:bg-black/85"
@@ -152,7 +152,7 @@ export default async function ProductDetails({
                 </svg>
                 Add to wishlist
               </button>
-            </div>
+            </div> */}
 
             <div className="mt-6 flex items-start gap-3 rounded-md bg-[#eef1ee] p-4">
               <svg

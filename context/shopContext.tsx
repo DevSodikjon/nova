@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
@@ -11,6 +17,9 @@ export type CartItem = {
   qty: number;
 };
 
+// For Cart
+export type CartKey = Pick<CartItem, "productId" | "color" | "size">;
+
 type ShopContextType = {
   wishlist: string[];
   isWished: (productId: string) => boolean;
@@ -18,6 +27,11 @@ type ShopContextType = {
   cart: CartItem[];
   cartCount: number;
   addToCart: (item: CartItem) => boolean;
+
+  // For Cart
+  ready: boolean;
+  setCartQty: (key: CartKey, qty: number) => void;
+  removeFromCart: (key: CartKey) => void;
 };
 
 const ShopContext = createContext<ShopContextType | null>(null);
@@ -30,8 +44,10 @@ function read<T>(key: string): T[] {
   }
 }
 
-function sameItem(a: CartItem, b: CartItem) {
-  return a.productId === b.productId && a.color === b.color && a.size === b.size;
+function sameItem(a: CartKey, b: CartKey) {
+  return (
+    a.productId === b.productId && a.color === b.color && a.size === b.size
+  );
 }
 
 export function ShopProvider({ children }: { children: ReactNode }) {
@@ -81,7 +97,9 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const toggleWishlist = (productId: string) => {
     if (!requireUser()) return;
     setWishlist((list) =>
-      list.includes(productId) ? list.filter((x) => x !== productId) : [productId, ...list]
+      list.includes(productId)
+        ? list.filter((x) => x !== productId)
+        : [productId, ...list],
     );
   };
 
@@ -89,16 +107,34 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     if (!requireUser()) return false;
     setCart((list) =>
       list.some((x) => sameItem(x, item))
-        ? list.map((x) => (sameItem(x, item) ? { ...x, qty: x.qty + item.qty } : x))
-        : [...list, item]
+        ? list.map((x) =>
+            sameItem(x, item) ? { ...x, qty: x.qty + item.qty } : x,
+          )
+        : [...list, item],
     );
     return true;
   };
+
+  const setCartQty = (key: CartKey, qty: number) => {
+    if (!requireUser()) return;
+    setCart((list) =>
+      qty <= 0
+        ? list.filter((x) => !sameItem(x, key))
+        : list.map((x) => (sameItem(x, key) ? { ...x, qty } : x)),
+    );
+  };
+
+  const removeFromCart = (key: CartKey) => setCartQty(key, 0);
+
+  const ready = !loading && (!uid || loadedFor === uid);
 
   return (
     <ShopContext.Provider
       value={{
         wishlist,
+        ready,
+        setCartQty,
+        removeFromCart,
         isWished: (productId) => wishlist.includes(productId),
         toggleWishlist,
         cart,

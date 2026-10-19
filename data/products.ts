@@ -1,3 +1,5 @@
+
+
 export type Variant = {
   color: string;
   colorHex: string;
@@ -27,6 +29,7 @@ function slugify(text: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 }
+
 
 const rawProducts: Omit<Product, "id">[] = [
   {
@@ -436,6 +439,7 @@ const rawProducts: Omit<Product, "id">[] = [
 export const product: Product[] = rawProducts.map((p) => ({
   id: slugify(p.name),
   ...p,
+
 }));
 if (process.env.NODE_ENV !== "production") {
   const ids = new Set(product.map((p) => p.id));

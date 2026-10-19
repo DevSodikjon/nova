@@ -51,7 +51,7 @@ export default function ProductCard({
       )}
     </Link>
 
-    <WishlistButton productId={id} />
+    <WishlistButton productId={id} /> 
   </div>
 
       <p className="text-sm text-[#6b6b63]">{category}</p>
