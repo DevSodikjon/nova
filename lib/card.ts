@@ -45,3 +45,8 @@ export function getCardTotals(lines: CartLine[]): CartTotals {
   const total = round2(subtotal + shipping + tax);
   return { subtotal, shipping, tax, total };
 }
+
+// Yetkazib berish narxi tanlanganda jami summani qayta hisoblaydi
+export function withShipping(totals: CartTotals, shipping: number): CartTotals {
+  return { ...totals, shipping, total: round2(totals.subtotal + shipping + totals.tax) };
+}

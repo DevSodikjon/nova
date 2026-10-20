@@ -22,6 +22,7 @@ export type CartKey = Pick<CartItem, "productId" | "color" | "size">;
 
 type ShopContextType = {
   wishlist: string[];
+  clearCart: () => void;
   isWished: (productId: string) => boolean;
   toggleWishlist: (productId: string) => void;
   cart: CartItem[];
@@ -63,7 +64,10 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [loadedFor, setLoadedFor] = useState<string | null>(null);
 
-  const [lastAdded, setLastAdded] = useState<{ id: number; item: CartItem } | null>(null);
+  const [lastAdded, setLastAdded] = useState<{
+    id: number;
+    item: CartItem;
+  } | null>(null);
 
   // 1) Foydalanuvchi aniqlanganda shu accountning ma'lumotini o'qiydi
   useEffect(() => {
@@ -110,15 +114,17 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   };
 
   const addToCart = (item: CartItem, notify = true) => {
-  if (!requireUser()) return false;
-  setCart((list) =>
-    list.some((x) => sameItem(x, item))
-      ? list.map((x) => (sameItem(x, item) ? { ...x, qty: x.qty + item.qty } : x))
-      : [...list, item]
-  );
-  if (notify) setLastAdded({ id: Date.now(), item });
-  return true;
-};
+    if (!requireUser()) return false;
+    setCart((list) =>
+      list.some((x) => sameItem(x, item))
+        ? list.map((x) =>
+            sameItem(x, item) ? { ...x, qty: x.qty + item.qty } : x,
+          )
+        : [...list, item],
+    );
+    if (notify) setLastAdded({ id: Date.now(), item });
+    return true;
+  };
 
   const setCartQty = (key: CartKey, qty: number) => {
     if (!requireUser()) return;
@@ -130,6 +136,8 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   };
 
   const removeFromCart = (key: CartKey) => setCartQty(key, 0);
+
+  const clearCart = () => setCart([]);
 
   const ready = !loading && (!uid || loadedFor === uid);
 
@@ -146,6 +154,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
         cart,
         cartCount: cart.reduce((sum, i) => sum + i.qty, 0),
         addToCart,
+        clearCart,
       }}
     >
       {children}
