@@ -17,8 +17,8 @@ const trust = [
 
 export default function CheckoutSummary({ lines, totals, onPlaceOrder }: CheckoutSummaryProps) {
   return (
-    <aside id="order-summary" className="h-fit rounded-sm border border-black/10 bg-[#fdfcf9] p-6 lg:sticky lg:top-24">
-      <div className="flex items-start justify-between">
+    <aside id="order-summary" className="h-fit rounded-sm border border-black/10 bg-[#fdfcf9] p-6 lg:sticky lg:top-24 ">
+      <div className="flex items-start justify-between ">
         <h2 className="text-2xl font-medium text-black">Your order</h2>
         <Link href="/cart" className="text-xs text-[#6b6b63] underline underline-offset-4">
           Edit cart

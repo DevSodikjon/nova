@@ -11,6 +11,8 @@ import {
   getShippingCost,
   isContactComplete,
   validate,
+  deliveryRange,
+
   type BoolField,
   type CheckBindings,
   type CheckoutData,
@@ -106,10 +108,27 @@ export default function CheckoutView({ lines, defaults, onPlaced }: CheckoutView
   }
 
   function placeOrder() {
-    if (!validateAll()) return;
-    const id = `NVA-${Math.floor(10000 + Math.random() * 90000)}`;
-    onPlaced({ id, email: data.email, firstName: data.firstName, total: totals.total });
-  }
+  if (!validateAll()) return;
+  const id = `NVA-${Math.floor(10000 + Math.random() * 90000)}`;
+
+  onPlaced({
+    id,
+    placedAt: new Date().toISOString(),
+    email: data.email,
+    firstName: data.firstName,
+    lastName: data.lastName,
+    address: {
+      street: data.address,
+      apartment: data.apartment,
+      city: data.city,
+      state: data.state,
+      zip: data.zip,
+    },
+    delivery: { label: option.label, range: deliveryRange(option), cost: totals.shipping },
+    lines,
+    totals,
+  });
+}
 
   return (
     <>

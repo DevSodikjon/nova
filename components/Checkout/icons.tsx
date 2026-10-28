@@ -49,3 +49,19 @@ export const ChatIcon = ({ size = 14 }: IconProps) => (
     <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z" />
   </svg>
 );
+
+export const TruckIcon = ({ size = 22 }: IconProps) => (
+  <svg {...base(size)}>
+    <path d="M2 6h11v10H2z" />
+    <path d="M13 9h4l3 3v4h-7" />
+    <circle cx="7" cy="18" r="1.8" />
+    <circle cx="17" cy="18" r="1.8" />
+  </svg>
+);
+
+export const PinIcon = ({ size = 22 }: IconProps) => (
+  <svg {...base(size)}>
+    <path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11Z" />
+    <circle cx="12" cy="10" r="2.5" />
+  </svg>
+);
