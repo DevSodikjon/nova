@@ -2,11 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { UserIcon, BoxIcon, HeartIcon, PinIcon, GearIcon, LogoutIcon } from "./icons";
+import {
+  UserIcon,
+  BoxIcon,
+  HeartIcon,
+  PinIcon,
+  GearIcon,
+  LogoutIcon,
+} from "./icons";
 
 const links = [
   { label: "Personal Information", href: "/account", icon: UserIcon },
-  { label: "Orders", href: "/orders", icon: BoxIcon },
+  { label: "Orders", href: "/account/orders", icon: BoxIcon },
   { label: "Wishlist", href: "/account/wishlist", icon: HeartIcon },
   { label: "Saved Addresses", href: "/addresses", icon: PinIcon },
   { label: "Settings", href: "/settings", icon: GearIcon },
@@ -18,7 +25,11 @@ type AccountSidebarProps = {
   onLogout: () => void;
 };
 
-export default function accountSidebar({ name, email, onLogout }: AccountSidebarProps) {
+export default function accountSidebar({
+  name,
+  email,
+  onLogout,
+}: AccountSidebarProps) {
   const pathname = usePathname();
   const initials = name
     .split(" ")
@@ -41,13 +52,18 @@ export default function accountSidebar({ name, email, onLogout }: AccountSidebar
 
       <nav className="flex gap-1 overflow-x-auto lg:flex-col lg:overflow-visible">
         {links.map(({ label, href, icon: Icon }) => {
-          const active = pathname === href;
+          const active =
+            href === "/account"
+              ? pathname === href
+              : pathname === href || pathname.startsWith(`${href}/`);
           return (
             <Link
               key={href}
               href={href}
               className={`flex items-center gap-3 whitespace-nowrap rounded-md px-4 py-3 text-sm ${
-                active ? "bg-[#dfe8e2] text-black" : "text-black hover:bg-black/5"
+                active
+                  ? "bg-[#dfe8e2] text-black"
+                  : "text-black hover:bg-black/5"
               }`}
             >
               <Icon />

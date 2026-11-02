@@ -10,9 +10,16 @@ type AccountShellProps = {
   subtitle?: string;
   right?: ReactNode;
   children: ReactNode;
+  eyebrow?: ReactNode;
 };
 
-export default function AccountShell({ title, subtitle, right, children }: AccountShellProps) {
+export default function AccountShell({
+  title,
+  subtitle,
+  eyebrow,
+  right,
+  children,
+}: AccountShellProps) {
   const { user, loading, logout } = useAuth();
   const router = useRouter();
 
@@ -30,11 +37,17 @@ export default function AccountShell({ title, subtitle, right, children }: Accou
   return (
     <div className="bg-[#f4f1ea] py-8 sm:py-12">
       <div className="container">
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#6b6b63]">My NOVA</p>
+        {eyebrow ?? (
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#6b6b63]">
+            My NOVA
+          </p>
+        )}
 
         <div className="mt-2 flex flex-col gap-4 border-b border-black/10 pb-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h1 className="text-4xl font-light text-black sm:text-5xl">{title}</h1>
+            <h1 className="text-4xl font-light text-black sm:text-5xl">
+              {title}
+            </h1>
             {subtitle && <p className="mt-2 text-[#6b6b63]">{subtitle}</p>}
           </div>
           {right}

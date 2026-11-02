@@ -7,7 +7,7 @@ type PaginationProps = {
 };
 
 export default function Pagination({ current, total, basePath }: PaginationProps) {
-  const pageHref = (p: number) => `${basePath}?page=${p}`;
+ const pageHref = (p: number) => `${basePath}${basePath.includes("?") ? "&" : "?"}page=${p}`;
 
   const windowSize = 4;
   let start = Math.max(1, current - Math.floor(windowSize / 2));

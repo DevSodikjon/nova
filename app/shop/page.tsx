@@ -4,20 +4,29 @@ import ShopFilters from "@/components/Shop/ShopFilters";
 import ActiveFilters from "@/components/Shop/ActiveFilters";
 import Pagination from "@/components/Shop/Pagination";
 import { product } from "@/data/products";
+import { categoryOf, getCategories } from "@/lib/categories";
 
 const PER_PAGE = 9;
 
 export default async function ShopPage({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string }>;
+  searchParams: Promise<{ page?: string; category?: string }>;
 }) {
-  const { page } = await searchParams;
-  const totalPages = Math.max(1, Math.ceil(product.length / PER_PAGE));
-  const current = Math.min(Math.max(1, Number(page) || 1), totalPages);
+  const { page, category } = await searchParams;
 
+  const categories = await getCategories();
+  // Noto'g'ri nom yozilsa (masalan ?category=xyz), filtr ishlamaydi va hammasi chiqadi
+  const activeCategory = categories.find((c) => c.name === category)?.name;
+
+  const filtered = activeCategory
+    ? product.filter((p) => categoryOf(p) === activeCategory)
+    : product;
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+  const current = Math.min(Math.max(1, Number(page) || 1), totalPages);
   const start = (current - 1) * PER_PAGE;
-  const pageItems = product.slice(start, start + PER_PAGE);
+  const pageItems = filtered.slice(start, start + PER_PAGE);
 
   return (
     <div className="bg-[#faf8f3] py-8 sm:py-12 ">
@@ -32,7 +41,9 @@ export default async function ShopPage({
               Shop
             </Link>
             <span>/</span>
-            <span className="font-medium text-black">All products</span>
+            <span className="font-medium text-black">
+              {activeCategory ?? "All products"}
+            </span>
           </nav>
 
           <div className="mt-6 flex flex-col gap-4 border-b border-black/10 pb-6 lg:flex-row lg:items-end lg:justify-between">
@@ -41,10 +52,10 @@ export default async function ShopPage({
                 The collection
               </p>
               <h1 className="mt-2 text-4xl sm:text-5xl font-light text-black">
-                Shop all
+                {activeCategory ?? "Shop all"}
               </h1>
               <p className="mt-2 text-[#6b6b63]">
-                {product.length} considered pieces
+                {filtered.length} considered pieces
               </p>
             </div>
             <p className="max-w-sm text-sm text-[#6b6b63] lg:text-right">
@@ -54,9 +65,12 @@ export default async function ShopPage({
           </div>
         </div>
 
-
         <div className="mt-8 flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-12 ">
-          <ShopFilters />
+          <ShopFilters
+            categories={categories}
+            total={product.length}
+            activeCategory={activeCategory}
+          />
 
           <div className="flex-1">
             <div className="mb-6 flex sm:justify-end gap-4 sm:flex-row sm:items-center sm:justify-between ">
@@ -76,7 +90,15 @@ export default async function ShopPage({
               ))}
             </div>
 
-            <Pagination current={current} total={totalPages} basePath="/shop" />
+            <Pagination
+              current={current}
+              total={totalPages}
+              basePath={
+                activeCategory
+                  ? `/shop?category=${encodeURIComponent(activeCategory)}`
+                  : "/shop"
+              }
+            />
           </div>
         </div>
       </div>
