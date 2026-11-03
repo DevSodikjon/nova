@@ -19,4 +19,6 @@ export const colors: Color[] = [
   { name: "Cocoa", hex: "#6b4a37" },
   { name: "Olive", hex: "#6b6b4a" },
   { name: "Clay", hex: "#a66b4a" },
+  { name: "White", hex: "#ffffff" },
+  {name: "Silver", hex: "#c0c0c0"}
 ];
